@@ -1,13 +1,11 @@
 package com.example.projectandroid;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -22,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.projectandroid.adapter.PhoneListAdapter;
 import com.example.projectandroid.db.DatabaseHelper;
-import com.example.projectandroid.model.PhoneItem;
+import com.example.projectandroid.model.NakornpathomTourismItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper mHelper;
     private SQLiteDatabase mDb;
-    private List<PhoneItem> mPhoneItemList;
+    private List<NakornpathomTourismItem> mNakornpathomTourismItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { // todo เตรียม data base
@@ -94,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadPhoneData() {
         Cursor c = mDb.query(TABLE_NAME, null, null, null, null, null, null);
 
-        mPhoneItemList = new ArrayList<>();
+        mNakornpathomTourismItemList = new ArrayList<>();
         while (c.moveToNext()) {
             long id = c.getLong(c.getColumnIndex(COL_ID));
             String title = c.getString(c.getColumnIndex(COL_TITLE));
@@ -102,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
             String detail = c.getString(c.getColumnIndex(COL_DETAIL));
             String image = c.getString(c.getColumnIndex(COL_IMAGE));
 
-            PhoneItem item = new PhoneItem(id, title, location,detail, image);
-            mPhoneItemList.add(item);
+            NakornpathomTourismItem item = new NakornpathomTourismItem(id, title, location,detail, image);
+            mNakornpathomTourismItemList.add(item);
         }
         c.close();
     }
@@ -112,26 +110,25 @@ public class MainActivity extends AppCompatActivity {
         PhoneListAdapter adapter = new PhoneListAdapter(
                 MainActivity.this,
                 R.layout.item_phone,
-                mPhoneItemList
+                mNakornpathomTourismItemList
         );
         ListView lv = findViewById(R.id.result_list_view);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) { // todo ถ้ากดที่ list มด list หนึ่งจะทำการโทร
-                PhoneItem item = mPhoneItemList.get(position);
+                NakornpathomTourismItem item = mNakornpathomTourismItemList.get(position);
 
-                Toast t = Toast.makeText(MainActivity.this, item.location, Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(MainActivity.this, item.title, Toast.LENGTH_SHORT);
                 t.show();
 
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
 
-                final PhoneItem phoneItem = mPhoneItemList.get(position);
-                intent.putExtra("title", phoneItem.title);
-                intent.putExtra("location", phoneItem.location);
-                intent.putExtra("detail", phoneItem.detail);
-                intent.putExtra("image", phoneItem.image);
-                intent.putExtra("id", phoneItem._id);
+                intent.putExtra("title", item.title);
+                intent.putExtra("location", item.location);
+                intent.putExtra("detail", item.detail);
+                intent.putExtra("image", item.image);
+                intent.putExtra("id", item._id);
                 startActivity(intent);
 
 //                Intent intent = new Intent(
@@ -154,14 +151,14 @@ public class MainActivity extends AppCompatActivity {
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                final PhoneItem phoneItem = mPhoneItemList.get(position);
+                                final NakornpathomTourismItem item = mNakornpathomTourismItemList.get(position);
 
                                 switch (i) {
                                     case 0: // Edit
                                         Intent intent = new Intent(MainActivity.this, EditPhoneItemActivity.class);
-                                        intent.putExtra("title", phoneItem.title);
-                                        intent.putExtra("location", phoneItem.location);
-                                        intent.putExtra("id", phoneItem._id);
+                                        intent.putExtra("title", item.title);
+                                        intent.putExtra("location", item.location);
+                                        intent.putExtra("id", item._id);
                                         startActivity(intent);
                                         break;
                                     case 1: // Delete
@@ -173,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                                                         mDb.delete(
                                                                 TABLE_NAME,
                                                                 COL_ID + " = ?",
-                                                                new String[]{String.valueOf(phoneItem._id)}
+                                                                new String[]{String.valueOf(item._id)}
                                                         );
                                                         loadPhoneData();
                                                         setupListView();

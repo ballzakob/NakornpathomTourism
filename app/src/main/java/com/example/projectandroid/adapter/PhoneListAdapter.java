@@ -13,25 +13,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.projectandroid.R;
-import com.example.projectandroid.model.PhoneItem;
+import com.example.projectandroid.model.NakornpathomTourismItem;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class PhoneListAdapter extends ArrayAdapter<PhoneItem> {
+public class PhoneListAdapter extends ArrayAdapter<NakornpathomTourismItem> {
 
     private Context mContext;
     private int mResource;
-    private List<PhoneItem> mPhoneItemList;
+    private List<NakornpathomTourismItem> mNakornpathomTourismItemList;
 
     public PhoneListAdapter(@NonNull Context context,  /// เอาข้อมูลมาแสดงเป็น list
                             int resource,
-                            @NonNull List<PhoneItem> phoneItemList) {
+                            @NonNull List<NakornpathomTourismItem> phoneItemList) {
         super(context, resource, phoneItemList);
         this.mContext = context;
         this.mResource = resource;
-        this.mPhoneItemList = phoneItemList;
+        this.mNakornpathomTourismItemList = phoneItemList;
     }
 
     @NonNull
@@ -44,10 +44,10 @@ public class PhoneListAdapter extends ArrayAdapter<PhoneItem> {
         TextView numberTextView = view.findViewById(R.id.number_text_view); // ดึงเบอร์จาก database มาใข้
         ImageView imageView = view.findViewById(R.id.image_view); // ดึงรูปจาก database มาใข้
 
-        PhoneItem phoneItem = mPhoneItemList.get(position);
-        String title = phoneItem.title;
-        String location = phoneItem.location;
-        String filename = phoneItem.image;
+        NakornpathomTourismItem item = mNakornpathomTourismItemList.get(position);
+        String title = item.title;
+        String location = item.location;
+        String filename = item.image;
         if(title.length() > 20){
             title = title.substring(0,20) + "...";
         }
