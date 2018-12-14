@@ -3,6 +3,8 @@ package com.example.projectandroid;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import java.util.List;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 
+import static com.example.projectandroid.db.DatabaseHelper.COL_DETAIL;
 import static com.example.projectandroid.db.DatabaseHelper.COL_IMAGE;
 import static com.example.projectandroid.db.DatabaseHelper.COL_LOCATION;
 import static com.example.projectandroid.db.DatabaseHelper.COL_TITLE;
@@ -54,7 +57,7 @@ public class AddPhoneItemActivity extends AppCompatActivity {
             }
         });
 
-        ImageView logoImageView = findViewById(R.id.logo_image_view);
+        ImageView logoImageView = findViewById(R.id.image_show2);
         logoImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +85,10 @@ public class AddPhoneItemActivity extends AppCompatActivity {
                 }
 
                 mLogoFilename = logoFile.getName();
+                ImageView logoImageView = findViewById(R.id.image_show2);
+
+                Bitmap bitmap = BitmapFactory.decodeFile(logoFile.getAbsolutePath(), null);
+                logoImageView.setImageBitmap(bitmap);
             }
         });
     }
@@ -106,15 +113,18 @@ public class AddPhoneItemActivity extends AppCompatActivity {
     }
 
     private void doInsertPhoneItem() {
-        EditText titleEditText = findViewById(R.id.title_edit_text);
-        EditText numberEditText = findViewById(R.id.edit_text);
+        EditText titleEditText = findViewById(R.id.title_add_text3);
+        EditText locationEditText = findViewById(R.id.location_add_text3);
+        EditText detailEditText = findViewById(R.id.detail_add_text3);
 
         String title = titleEditText.getText().toString();
-        String location = numberEditText.getText().toString();
+        String location = locationEditText.getText().toString();
+        String detail = detailEditText.getText().toString();
 
         ContentValues cv = new ContentValues();
         cv.put(COL_TITLE, title);
         cv.put(COL_LOCATION, location);
+        cv.put(COL_DETAIL, detail);
         cv.put(COL_IMAGE,mLogoFilename);
         mDb.insert(TABLE_NAME, null, cv);
 

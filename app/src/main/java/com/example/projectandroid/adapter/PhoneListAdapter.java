@@ -2,6 +2,8 @@ package com.example.projectandroid.adapter;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.example.projectandroid.R;
 import com.example.projectandroid.model.NakornpathomTourismItem;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -56,10 +59,16 @@ public class PhoneListAdapter extends ArrayAdapter<NakornpathomTourismItem> {
 
         AssetManager am = mContext.getAssets();
         try {
-            InputStream is = am.open(filename);//เปิดไฟล์ใน asserts มาอ่าน
-            Drawable drawable = Drawable.createFromStream(is," ");
+            InputStream is = am.open(filename);
+            Drawable drawable = Drawable.createFromStream(is, "");
             imageView.setImageDrawable(drawable);
         } catch (IOException e) {
+            File privateDir = mContext.getFilesDir();
+            File logoFile = new File(privateDir, filename);
+
+            Bitmap bitmap = BitmapFactory.decodeFile(logoFile.getAbsolutePath(), null);
+            imageView.setImageBitmap(bitmap);
+
             e.printStackTrace();
         }
 

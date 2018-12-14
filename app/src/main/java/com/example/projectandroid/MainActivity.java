@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mHelper = new DatabaseHelper(MainActivity.this);
         mDb = mHelper.getWritableDatabase();
 
-        Button addPhoneItemButton = findViewById(R.id.add_phone_item_button);
+        Button addPhoneItemButton = findViewById(R.id.add_tourism_item_button);
         addPhoneItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
                                         Intent intent = new Intent(MainActivity.this, EditPhoneItemActivity.class);
                                         intent.putExtra("title", item.title);
                                         intent.putExtra("location", item.location);
+                                        intent.putExtra("detail", item.detail);
+                                        intent.putExtra("image", item.image);
                                         intent.putExtra("id", item._id);
                                         startActivity(intent);
                                         break;
