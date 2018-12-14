@@ -60,7 +60,7 @@ public class EditPhoneItemActivity extends AppCompatActivity {
 
         AssetManager am = getAssets();
         try {
-            InputStream is = am.open(detail);
+            InputStream is = am.open(image);
             Drawable drawable = Drawable.createFromStream(is, "");
             image_s.setImageDrawable(drawable);
         } catch (IOException e) {

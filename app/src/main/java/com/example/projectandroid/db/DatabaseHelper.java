@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_DETAIL = "detail";
     public static final String COL_IMAGE = "image";
 
-    private static final String SQL_CREATE_TABLE_PHONE
+    private static final String SQL_CREATE_TABLE
             = "CREATE TABLE " + TABLE_NAME + "("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COL_TITLE + " TEXT,"
@@ -33,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_TABLE_PHONE);
+        db.execSQL(SQL_CREATE_TABLE);
 
         ContentValues cv = new ContentValues();
         cv.put(COL_TITLE, "วัดพระปฐมเจดีย์ราชวรมหาวิหาร");
