@@ -39,7 +39,7 @@ public class AddPhoneItemActivity extends AppCompatActivity {
 
     private DatabaseHelper mHelper;
     private SQLiteDatabase mDb;
-    private String mLogoFilename = null;
+    private String mLogoFilename = "วัด.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
