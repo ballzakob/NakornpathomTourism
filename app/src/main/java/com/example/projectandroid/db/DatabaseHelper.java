@@ -31,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, "nakornpathom_tourism.db", null, 1);
     }
 
+    
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_TABLE);
