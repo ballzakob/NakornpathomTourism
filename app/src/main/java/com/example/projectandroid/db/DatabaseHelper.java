@@ -28,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public DatabaseHelper(Context context) {
-        super(context, "phone.db", null, 1);
+        super(context, "nakornpathom_tourism.db", null, 1);
     }
 
     @Override
